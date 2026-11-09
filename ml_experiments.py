@@ -1,139 +1,75 @@
-# ml_experiments.py
-"""
-Simple ML experiments for the Mood Machine lab.
-
-This file uses a "real" machine learning library (scikit-learn)
-to train a tiny text classifier on the same SAMPLE_POSTS and
-TRUE_LABELS that you use with the rule based model.
-"""
-
-from typing import List, Tuple
+"""Bag-of-words/logistic-regression comparison, retaining the provided approach."""
+import argparse
 
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score
 
-from dataset import SAMPLE_POSTS, TRUE_LABELS
+from dataset import SAMPLE_POSTS, TRUE_LABELS, STRESS_POSTS, STRESS_LABELS, validate_dataset
 
 
-def train_ml_model(
-    texts: List[str],
-    labels: List[str],
-) -> Tuple[CountVectorizer, LogisticRegression]:
-    """
-    Train a simple text classifier using bag of words features
-    and logistic regression.
-
-    Steps:
-      1. Convert the texts into numeric vectors using CountVectorizer.
-      2. Fit a LogisticRegression model on those vectors and labels.
-
-    Returns:
-      (vectorizer, model)
-    """
-    if len(texts) != len(labels):
-        raise ValueError(
-            "texts and labels must be the same length. "
-            "Check SAMPLE_POSTS and TRUE_LABELS in dataset.py."
-        )
-
-    if not texts:
-        raise ValueError("No training data provided. Add examples in dataset.py.")
-
+def train_ml_model(texts, labels):
+    """Fit vocabulary and model on training posts only, never on the stress set."""
+    validate_dataset(texts, labels)
+    if not texts or len(set(labels)) < 2:
+        raise ValueError("Training needs nonempty data and at least two sentiment classes.")
     vectorizer = CountVectorizer()
-    X = vectorizer.fit_transform(texts)
-
-    model = LogisticRegression(max_iter=1000)
-    model.fit(X, labels)
-
+    features = vectorizer.fit_transform(texts)
+    model = LogisticRegression(max_iter=2000, random_state=110)
+    model.fit(features, labels)
     return vectorizer, model
 
 
-def evaluate_on_dataset(
-    texts: List[str],
-    labels: List[str],
-    vectorizer: CountVectorizer,
-    model: LogisticRegression,
-) -> float:
-    """
-    Evaluate the trained model on a labeled dataset.
-
-    Prints each text with its predicted label and the true label,
-    then returns the overall accuracy as a float between 0 and 1.
-    """
-    if len(texts) != len(labels):
-        raise ValueError(
-            "texts and labels must be the same length. "
-            "Check your dataset."
-        )
-
-    X = vectorizer.transform(texts)
-    preds = model.predict(X)
-
-    print("=== ML Model Evaluation on Dataset ===")
+def evaluate_on_dataset(texts, labels, vectorizer, model, title="ML evaluation"):
+    """Report accuracy with an explicit name for the dataset being measured."""
+    validate_dataset(texts, labels)
+    print(f"=== {title} ===")
+    if not texts:
+        print("No examples; accuracy reported as 0.")
+        return 0.0
+    predictions = model.predict(vectorizer.transform(texts))
     correct = 0
-    for text, true_label, pred_label in zip(texts, labels, preds):
-        is_correct = pred_label == true_label
-        if is_correct:
-            correct += 1
-        print(f'"{text}" -> predicted={pred_label}, true={true_label}')
-
-    accuracy = accuracy_score(labels, preds)
-    print(f"\nAccuracy on this dataset: {accuracy:.2f}")
+    for text, expected, predicted in zip(texts, labels, predictions):
+        correct += expected == predicted
+        marker = "OK" if expected == predicted else "MISMATCH"
+        print(f"{marker}: {text!r} -> predicted={predicted}, true={expected}")
+    accuracy = correct / len(texts)
+    print(f"Accuracy: {correct}/{len(texts)} = {accuracy:.2%}")
     return accuracy
 
 
-def predict_single_text(
-    text: str,
-    vectorizer: CountVectorizer,
-    model: LogisticRegression,
-) -> str:
-    """
-    Predict the mood label for a single text string using
-    the trained ML model.
-    """
-    X = vectorizer.transform([text])
-    pred = model.predict(X)[0]
-    return pred
+def predict_single_text(text, vectorizer, model):
+    """Predict one label; out-of-vocabulary text may have no useful evidence."""
+    return str(model.predict(vectorizer.transform([text]))[0])
 
 
-def run_interactive_loop(
-    vectorizer: CountVectorizer,
-    model: LogisticRegression,
-) -> None:
-    """
-    Let the user type their own sentences and see the ML model's
-    predicted mood label.
-
-    Type 'quit' or press Enter on an empty line to exit.
-    """
-    print("\n=== Interactive Mood Machine (ML model) ===")
-    print("Type a sentence to analyze its mood.")
-    print("Type 'quit' or press Enter on an empty line to exit.\n")
-
+def run_interactive_loop(vectorizer, model):
+    """Accept new posts while displaying which words exist in the learned vocabulary."""
+    tokenizer = vectorizer.build_analyzer()
+    print("\nType a post; Enter or 'quit' exits.")
     while True:
-        user_input = input("You: ").strip()
-        if user_input == "" or user_input.lower() == "quit":
-            print("Goodbye from the ML Mood Machine.")
+        try:
+            text = input("You: ").strip()
+        except EOFError:
             break
+        if not text or text.casefold() == "quit":
+            break
+        known = [word for word in tokenizer(text) if word in vectorizer.vocabulary_]
+        print(f"ML: {predict_single_text(text, vectorizer, model)}; known words={known}")
 
-        label = predict_single_text(user_input, vectorizer, model)
-        print(f"ML model: {label}")
+
+def main():
+    """Separate training accuracy from results on untrained diagnostic examples."""
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--batch", action="store_true")
+    args = parser.parse_args()
+    vectorizer, model = train_ml_model(SAMPLE_POSTS, TRUE_LABELS)
+    evaluate_on_dataset(SAMPLE_POSTS, TRUE_LABELS, vectorizer, model,
+                        "Training accuracy (NOT unseen-data performance)")
+    evaluate_on_dataset(STRESS_POSTS, STRESS_LABELS, vectorizer, model,
+                        "Separate diagnostic stress set (small and intentionally difficult)")
+    if not args.batch:
+        run_interactive_loop(vectorizer, model)
 
 
 if __name__ == "__main__":
-    print("Training an ML model on SAMPLE_POSTS and TRUE_LABELS from dataset.py...")
-    print("Make sure you have added enough labeled examples before running this.\n")
-
-    # Train the model on the current dataset.
-    vectorizer, model = train_ml_model(SAMPLE_POSTS, TRUE_LABELS)
-
-    # Evaluate on the same dataset (training accuracy).
-    evaluate_on_dataset(SAMPLE_POSTS, TRUE_LABELS, vectorizer, model)
-
-    # Let the user try their own examples.
-    run_interactive_loop(vectorizer, model)
-
-    print("\nTip: Compare these predictions with the rule based model")
-    print("by running `python main.py`. Notice where they fail in")
-    print("similar ways and where they fail in different ways.")
+    main()

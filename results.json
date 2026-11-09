@@ -1,0 +1,1170 @@
+{
+  "evaluation_date": "2026-11-08",
+  "python": "3.14.2",
+  "scikit_learn": "1.9.1",
+  "labels_reviewed_by_student": true,
+  "development_class_counts": {
+    "positive": 5,
+    "negative": 5,
+    "mixed": 2,
+    "neutral": 2
+  },
+  "stress_class_counts": {
+    "positive": 6,
+    "negative": 2
+  },
+  "stress_excluded_from_training": true,
+  "expanded_ml_vocabulary": [
+    "about",
+    "am",
+    "another",
+    "at",
+    "but",
+    "cap",
+    "chuffed",
+    "class",
+    "day",
+    "delay",
+    "excited",
+    "feeling",
+    "fine",
+    "finished",
+    "for",
+    "good",
+    "got",
+    "great",
+    "happy",
+    "hopeful",
+    "hour",
+    "is",
+    "kind",
+    "love",
+    "meeting",
+    "missed",
+    "much",
+    "my",
+    "no",
+    "noon",
+    "not",
+    "of",
+    "proud",
+    "result",
+    "set",
+    "sick",
+    "so",
+    "starts",
+    "terrible",
+    "that",
+    "the",
+    "this",
+    "tickets",
+    "tired",
+    "today",
+    "train",
+    "two",
+    "update",
+    "was",
+    "weekend",
+    "well",
+    "what",
+    "with"
+  ],
+  "constant_positive_stress_reference": 0.75,
+  "results": {
+    "keyword_baseline": {
+      "development": {
+        "correct": 9,
+        "total": 14,
+        "accuracy": 0.6428571428571429,
+        "rows": [
+          {
+            "text": "I love this class so much",
+            "expected": "positive",
+            "predicted": "positive"
+          },
+          {
+            "text": "Today was a terrible day",
+            "expected": "negative",
+            "predicted": "negative"
+          },
+          {
+            "text": "Feeling tired but kind of hopeful",
+            "expected": "mixed",
+            "predicted": "mixed"
+          },
+          {
+            "text": "This is fine",
+            "expected": "neutral",
+            "predicted": "neutral"
+          },
+          {
+            "text": "So excited for the weekend",
+            "expected": "positive",
+            "predicted": "positive"
+          },
+          {
+            "text": "I am not happy about this",
+            "expected": "negative",
+            "predicted": "positive"
+          },
+          {
+            "text": "Great, another two-hour delay.",
+            "expected": "negative",
+            "predicted": "positive"
+          },
+          {
+            "text": "That set was sick, no cap.",
+            "expected": "positive",
+            "predicted": "neutral"
+          },
+          {
+            "text": "Got my tickets 😄",
+            "expected": "positive",
+            "predicted": "positive"
+          },
+          {
+            "text": "Missed the train 😞",
+            "expected": "negative",
+            "predicted": "negative"
+          },
+          {
+            "text": "I'm tired but proud of what I finished.",
+            "expected": "mixed",
+            "predicted": "mixed"
+          },
+          {
+            "text": "This update is not good.",
+            "expected": "negative",
+            "predicted": "positive"
+          },
+          {
+            "text": "The meeting starts at noon.",
+            "expected": "neutral",
+            "predicted": "neutral"
+          },
+          {
+            "text": "I'm well chuffed with the result.",
+            "expected": "positive",
+            "predicted": "neutral"
+          }
+        ]
+      },
+      "stress": {
+        "correct": 2,
+        "total": 8,
+        "accuracy": 0.25,
+        "rows": [
+          {
+            "text": "This is not bad.",
+            "expected": "positive",
+            "predicted": "negative"
+          },
+          {
+            "text": "This is not only good but amazing.",
+            "expected": "positive",
+            "predicted": "positive"
+          },
+          {
+            "text": "I love getting stuck in traffic.",
+            "expected": "negative",
+            "predicted": "positive"
+          },
+          {
+            "text": "That set was excellent.",
+            "expected": "positive",
+            "predicted": "neutral"
+          },
+          {
+            "text": "I'm very pleased with the result.",
+            "expected": "positive",
+            "predicted": "neutral"
+          },
+          {
+            "text": "I'm well chuffed with this.",
+            "expected": "positive",
+            "predicted": "neutral"
+          },
+          {
+            "text": "I ain't happy about this.",
+            "expected": "negative",
+            "predicted": "positive"
+          },
+          {
+            "text": "I am happy about this.",
+            "expected": "positive",
+            "predicted": "positive"
+          }
+        ]
+      }
+    },
+    "negation_improvement": {
+      "development": {
+        "correct": 11,
+        "total": 14,
+        "accuracy": 0.7857142857142857,
+        "rows": [
+          {
+            "text": "I love this class so much",
+            "expected": "positive",
+            "predicted": "positive"
+          },
+          {
+            "text": "Today was a terrible day",
+            "expected": "negative",
+            "predicted": "negative"
+          },
+          {
+            "text": "Feeling tired but kind of hopeful",
+            "expected": "mixed",
+            "predicted": "mixed"
+          },
+          {
+            "text": "This is fine",
+            "expected": "neutral",
+            "predicted": "neutral"
+          },
+          {
+            "text": "So excited for the weekend",
+            "expected": "positive",
+            "predicted": "positive"
+          },
+          {
+            "text": "I am not happy about this",
+            "expected": "negative",
+            "predicted": "negative"
+          },
+          {
+            "text": "Great, another two-hour delay.",
+            "expected": "negative",
+            "predicted": "positive"
+          },
+          {
+            "text": "That set was sick, no cap.",
+            "expected": "positive",
+            "predicted": "neutral"
+          },
+          {
+            "text": "Got my tickets 😄",
+            "expected": "positive",
+            "predicted": "positive"
+          },
+          {
+            "text": "Missed the train 😞",
+            "expected": "negative",
+            "predicted": "negative"
+          },
+          {
+            "text": "I'm tired but proud of what I finished.",
+            "expected": "mixed",
+            "predicted": "mixed"
+          },
+          {
+            "text": "This update is not good.",
+            "expected": "negative",
+            "predicted": "negative"
+          },
+          {
+            "text": "The meeting starts at noon.",
+            "expected": "neutral",
+            "predicted": "neutral"
+          },
+          {
+            "text": "I'm well chuffed with the result.",
+            "expected": "positive",
+            "predicted": "neutral"
+          }
+        ]
+      },
+      "stress": {
+        "correct": 2,
+        "total": 8,
+        "accuracy": 0.25,
+        "rows": [
+          {
+            "text": "This is not bad.",
+            "expected": "positive",
+            "predicted": "positive"
+          },
+          {
+            "text": "This is not only good but amazing.",
+            "expected": "positive",
+            "predicted": "mixed"
+          },
+          {
+            "text": "I love getting stuck in traffic.",
+            "expected": "negative",
+            "predicted": "positive"
+          },
+          {
+            "text": "That set was excellent.",
+            "expected": "positive",
+            "predicted": "neutral"
+          },
+          {
+            "text": "I'm very pleased with the result.",
+            "expected": "positive",
+            "predicted": "neutral"
+          },
+          {
+            "text": "I'm well chuffed with this.",
+            "expected": "positive",
+            "predicted": "neutral"
+          },
+          {
+            "text": "I ain't happy about this.",
+            "expected": "negative",
+            "predicted": "positive"
+          },
+          {
+            "text": "I am happy about this.",
+            "expected": "positive",
+            "predicted": "positive"
+          }
+        ]
+      }
+    },
+    "ml_seed6": {
+      "development": {
+        "correct": 10,
+        "total": 14,
+        "accuracy": 0.7142857142857143,
+        "rows": [
+          {
+            "text": "I love this class so much",
+            "expected": "positive",
+            "predicted": "positive"
+          },
+          {
+            "text": "Today was a terrible day",
+            "expected": "negative",
+            "predicted": "negative"
+          },
+          {
+            "text": "Feeling tired but kind of hopeful",
+            "expected": "mixed",
+            "predicted": "mixed"
+          },
+          {
+            "text": "This is fine",
+            "expected": "neutral",
+            "predicted": "neutral"
+          },
+          {
+            "text": "So excited for the weekend",
+            "expected": "positive",
+            "predicted": "positive"
+          },
+          {
+            "text": "I am not happy about this",
+            "expected": "negative",
+            "predicted": "negative"
+          },
+          {
+            "text": "Great, another two-hour delay.",
+            "expected": "negative",
+            "predicted": "negative"
+          },
+          {
+            "text": "That set was sick, no cap.",
+            "expected": "positive",
+            "predicted": "negative"
+          },
+          {
+            "text": "Got my tickets 😄",
+            "expected": "positive",
+            "predicted": "negative"
+          },
+          {
+            "text": "Missed the train 😞",
+            "expected": "negative",
+            "predicted": "positive"
+          },
+          {
+            "text": "I'm tired but proud of what I finished.",
+            "expected": "mixed",
+            "predicted": "mixed"
+          },
+          {
+            "text": "This update is not good.",
+            "expected": "negative",
+            "predicted": "negative"
+          },
+          {
+            "text": "The meeting starts at noon.",
+            "expected": "neutral",
+            "predicted": "positive"
+          },
+          {
+            "text": "I'm well chuffed with the result.",
+            "expected": "positive",
+            "predicted": "positive"
+          }
+        ]
+      },
+      "stress": {
+        "correct": 2,
+        "total": 8,
+        "accuracy": 0.25,
+        "rows": [
+          {
+            "text": "This is not bad.",
+            "expected": "positive",
+            "predicted": "negative"
+          },
+          {
+            "text": "This is not only good but amazing.",
+            "expected": "positive",
+            "predicted": "negative"
+          },
+          {
+            "text": "I love getting stuck in traffic.",
+            "expected": "negative",
+            "predicted": "positive"
+          },
+          {
+            "text": "That set was excellent.",
+            "expected": "positive",
+            "predicted": "negative"
+          },
+          {
+            "text": "I'm very pleased with the result.",
+            "expected": "positive",
+            "predicted": "positive"
+          },
+          {
+            "text": "I'm well chuffed with this.",
+            "expected": "positive",
+            "predicted": "negative"
+          },
+          {
+            "text": "I ain't happy about this.",
+            "expected": "negative",
+            "predicted": "negative"
+          },
+          {
+            "text": "I am happy about this.",
+            "expected": "positive",
+            "predicted": "negative"
+          }
+        ]
+      }
+    },
+    "ml_expanded14": {
+      "development": {
+        "correct": 14,
+        "total": 14,
+        "accuracy": 1.0,
+        "rows": [
+          {
+            "text": "I love this class so much",
+            "expected": "positive",
+            "predicted": "positive"
+          },
+          {
+            "text": "Today was a terrible day",
+            "expected": "negative",
+            "predicted": "negative"
+          },
+          {
+            "text": "Feeling tired but kind of hopeful",
+            "expected": "mixed",
+            "predicted": "mixed"
+          },
+          {
+            "text": "This is fine",
+            "expected": "neutral",
+            "predicted": "neutral"
+          },
+          {
+            "text": "So excited for the weekend",
+            "expected": "positive",
+            "predicted": "positive"
+          },
+          {
+            "text": "I am not happy about this",
+            "expected": "negative",
+            "predicted": "negative"
+          },
+          {
+            "text": "Great, another two-hour delay.",
+            "expected": "negative",
+            "predicted": "negative"
+          },
+          {
+            "text": "That set was sick, no cap.",
+            "expected": "positive",
+            "predicted": "positive"
+          },
+          {
+            "text": "Got my tickets 😄",
+            "expected": "positive",
+            "predicted": "positive"
+          },
+          {
+            "text": "Missed the train 😞",
+            "expected": "negative",
+            "predicted": "negative"
+          },
+          {
+            "text": "I'm tired but proud of what I finished.",
+            "expected": "mixed",
+            "predicted": "mixed"
+          },
+          {
+            "text": "This update is not good.",
+            "expected": "negative",
+            "predicted": "negative"
+          },
+          {
+            "text": "The meeting starts at noon.",
+            "expected": "neutral",
+            "predicted": "neutral"
+          },
+          {
+            "text": "I'm well chuffed with the result.",
+            "expected": "positive",
+            "predicted": "positive"
+          }
+        ]
+      },
+      "stress": {
+        "correct": 4,
+        "total": 8,
+        "accuracy": 0.5,
+        "rows": [
+          {
+            "text": "This is not bad.",
+            "expected": "positive",
+            "predicted": "negative"
+          },
+          {
+            "text": "This is not only good but amazing.",
+            "expected": "positive",
+            "predicted": "negative"
+          },
+          {
+            "text": "I love getting stuck in traffic.",
+            "expected": "negative",
+            "predicted": "positive"
+          },
+          {
+            "text": "That set was excellent.",
+            "expected": "positive",
+            "predicted": "positive"
+          },
+          {
+            "text": "I'm very pleased with the result.",
+            "expected": "positive",
+            "predicted": "positive"
+          },
+          {
+            "text": "I'm well chuffed with this.",
+            "expected": "positive",
+            "predicted": "positive"
+          },
+          {
+            "text": "I ain't happy about this.",
+            "expected": "negative",
+            "predicted": "negative"
+          },
+          {
+            "text": "I am happy about this.",
+            "expected": "positive",
+            "predicted": "negative"
+          }
+        ]
+      }
+    },
+    "ml_label_sensitivity": {
+      "development": {
+        "correct": 13,
+        "total": 14,
+        "accuracy": 0.9285714285714286,
+        "rows": [
+          {
+            "text": "I love this class so much",
+            "expected": "positive",
+            "predicted": "positive"
+          },
+          {
+            "text": "Today was a terrible day",
+            "expected": "negative",
+            "predicted": "negative"
+          },
+          {
+            "text": "Feeling tired but kind of hopeful",
+            "expected": "mixed",
+            "predicted": "mixed"
+          },
+          {
+            "text": "This is fine",
+            "expected": "neutral",
+            "predicted": "neutral"
+          },
+          {
+            "text": "So excited for the weekend",
+            "expected": "positive",
+            "predicted": "positive"
+          },
+          {
+            "text": "I am not happy about this",
+            "expected": "negative",
+            "predicted": "negative"
+          },
+          {
+            "text": "Great, another two-hour delay.",
+            "expected": "negative",
+            "predicted": "positive"
+          },
+          {
+            "text": "That set was sick, no cap.",
+            "expected": "positive",
+            "predicted": "positive"
+          },
+          {
+            "text": "Got my tickets 😄",
+            "expected": "positive",
+            "predicted": "positive"
+          },
+          {
+            "text": "Missed the train 😞",
+            "expected": "negative",
+            "predicted": "negative"
+          },
+          {
+            "text": "I'm tired but proud of what I finished.",
+            "expected": "mixed",
+            "predicted": "mixed"
+          },
+          {
+            "text": "This update is not good.",
+            "expected": "negative",
+            "predicted": "negative"
+          },
+          {
+            "text": "The meeting starts at noon.",
+            "expected": "neutral",
+            "predicted": "neutral"
+          },
+          {
+            "text": "I'm well chuffed with the result.",
+            "expected": "positive",
+            "predicted": "positive"
+          }
+        ]
+      },
+      "stress": {
+        "correct": 4,
+        "total": 8,
+        "accuracy": 0.5,
+        "rows": [
+          {
+            "text": "This is not bad.",
+            "expected": "positive",
+            "predicted": "negative"
+          },
+          {
+            "text": "This is not only good but amazing.",
+            "expected": "positive",
+            "predicted": "negative"
+          },
+          {
+            "text": "I love getting stuck in traffic.",
+            "expected": "negative",
+            "predicted": "positive"
+          },
+          {
+            "text": "That set was excellent.",
+            "expected": "positive",
+            "predicted": "positive"
+          },
+          {
+            "text": "I'm very pleased with the result.",
+            "expected": "positive",
+            "predicted": "positive"
+          },
+          {
+            "text": "I'm well chuffed with this.",
+            "expected": "positive",
+            "predicted": "positive"
+          },
+          {
+            "text": "I ain't happy about this.",
+            "expected": "negative",
+            "predicted": "negative"
+          },
+          {
+            "text": "I am happy about this.",
+            "expected": "positive",
+            "predicted": "negative"
+          }
+        ]
+      }
+    }
+  },
+  "seed6_training": {
+    "correct": 6,
+    "total": 6,
+    "accuracy": 1.0,
+    "rows": [
+      {
+        "text": "I love this class so much",
+        "expected": "positive",
+        "predicted": "positive"
+      },
+      {
+        "text": "Today was a terrible day",
+        "expected": "negative",
+        "predicted": "negative"
+      },
+      {
+        "text": "Feeling tired but kind of hopeful",
+        "expected": "mixed",
+        "predicted": "mixed"
+      },
+      {
+        "text": "This is fine",
+        "expected": "neutral",
+        "predicted": "neutral"
+      },
+      {
+        "text": "So excited for the weekend",
+        "expected": "positive",
+        "predicted": "positive"
+      },
+      {
+        "text": "I am not happy about this",
+        "expected": "negative",
+        "predicted": "negative"
+      }
+    ]
+  },
+  "diagnostics": [
+    {
+      "text": "This is not bad.",
+      "expected": "positive",
+      "baseline": {
+        "tokens": [
+          "this",
+          "is",
+          "not",
+          "bad",
+          "."
+        ],
+        "matches": [
+          {
+            "token": "bad",
+            "base": -1,
+            "negated": false,
+            "contribution": -1
+          }
+        ],
+        "ignored": [
+          "this",
+          "is",
+          "not"
+        ],
+        "score": -1,
+        "label": "negative"
+      },
+      "improved": {
+        "tokens": [
+          "this",
+          "is",
+          "not",
+          "bad",
+          "."
+        ],
+        "matches": [
+          {
+            "token": "bad",
+            "base": -1,
+            "negated": true,
+            "contribution": 1
+          }
+        ],
+        "ignored": [
+          "this",
+          "is"
+        ],
+        "score": 1,
+        "label": "positive"
+      }
+    },
+    {
+      "text": "This is not only good but amazing.",
+      "expected": "positive",
+      "baseline": {
+        "tokens": [
+          "this",
+          "is",
+          "not",
+          "only",
+          "good",
+          "but",
+          "amazing",
+          "."
+        ],
+        "matches": [
+          {
+            "token": "good",
+            "base": 1,
+            "negated": false,
+            "contribution": 1
+          },
+          {
+            "token": "amazing",
+            "base": 1,
+            "negated": false,
+            "contribution": 1
+          }
+        ],
+        "ignored": [
+          "this",
+          "is",
+          "not",
+          "only"
+        ],
+        "score": 2,
+        "label": "positive"
+      },
+      "improved": {
+        "tokens": [
+          "this",
+          "is",
+          "not",
+          "only",
+          "good",
+          "but",
+          "amazing",
+          "."
+        ],
+        "matches": [
+          {
+            "token": "good",
+            "base": 1,
+            "negated": true,
+            "contribution": -1
+          },
+          {
+            "token": "amazing",
+            "base": 1,
+            "negated": false,
+            "contribution": 1
+          }
+        ],
+        "ignored": [
+          "this",
+          "is",
+          "only"
+        ],
+        "score": 0,
+        "label": "mixed"
+      }
+    },
+    {
+      "text": "I love getting stuck in traffic.",
+      "expected": "negative",
+      "baseline": {
+        "tokens": [
+          "i",
+          "love",
+          "getting",
+          "stuck",
+          "in",
+          "traffic",
+          "."
+        ],
+        "matches": [
+          {
+            "token": "love",
+            "base": 1,
+            "negated": false,
+            "contribution": 1
+          }
+        ],
+        "ignored": [
+          "i",
+          "getting",
+          "stuck",
+          "in",
+          "traffic"
+        ],
+        "score": 1,
+        "label": "positive"
+      },
+      "improved": {
+        "tokens": [
+          "i",
+          "love",
+          "getting",
+          "stuck",
+          "in",
+          "traffic",
+          "."
+        ],
+        "matches": [
+          {
+            "token": "love",
+            "base": 1,
+            "negated": false,
+            "contribution": 1
+          }
+        ],
+        "ignored": [
+          "i",
+          "getting",
+          "stuck",
+          "in",
+          "traffic"
+        ],
+        "score": 1,
+        "label": "positive"
+      }
+    },
+    {
+      "text": "That set was excellent.",
+      "expected": "positive",
+      "baseline": {
+        "tokens": [
+          "that",
+          "set",
+          "was",
+          "excellent",
+          "."
+        ],
+        "matches": [],
+        "ignored": [
+          "that",
+          "set",
+          "was",
+          "excellent"
+        ],
+        "score": 0,
+        "label": "neutral"
+      },
+      "improved": {
+        "tokens": [
+          "that",
+          "set",
+          "was",
+          "excellent",
+          "."
+        ],
+        "matches": [],
+        "ignored": [
+          "that",
+          "set",
+          "was",
+          "excellent"
+        ],
+        "score": 0,
+        "label": "neutral"
+      }
+    },
+    {
+      "text": "I'm very pleased with the result.",
+      "expected": "positive",
+      "baseline": {
+        "tokens": [
+          "i'm",
+          "very",
+          "pleased",
+          "with",
+          "the",
+          "result",
+          "."
+        ],
+        "matches": [],
+        "ignored": [
+          "i'm",
+          "very",
+          "pleased",
+          "with",
+          "the",
+          "result"
+        ],
+        "score": 0,
+        "label": "neutral"
+      },
+      "improved": {
+        "tokens": [
+          "i'm",
+          "very",
+          "pleased",
+          "with",
+          "the",
+          "result",
+          "."
+        ],
+        "matches": [],
+        "ignored": [
+          "i'm",
+          "very",
+          "pleased",
+          "with",
+          "the",
+          "result"
+        ],
+        "score": 0,
+        "label": "neutral"
+      }
+    },
+    {
+      "text": "I'm well chuffed with this.",
+      "expected": "positive",
+      "baseline": {
+        "tokens": [
+          "i'm",
+          "well",
+          "chuffed",
+          "with",
+          "this",
+          "."
+        ],
+        "matches": [],
+        "ignored": [
+          "i'm",
+          "well",
+          "chuffed",
+          "with",
+          "this"
+        ],
+        "score": 0,
+        "label": "neutral"
+      },
+      "improved": {
+        "tokens": [
+          "i'm",
+          "well",
+          "chuffed",
+          "with",
+          "this",
+          "."
+        ],
+        "matches": [],
+        "ignored": [
+          "i'm",
+          "well",
+          "chuffed",
+          "with",
+          "this"
+        ],
+        "score": 0,
+        "label": "neutral"
+      }
+    },
+    {
+      "text": "I ain't happy about this.",
+      "expected": "negative",
+      "baseline": {
+        "tokens": [
+          "i",
+          "ain't",
+          "happy",
+          "about",
+          "this",
+          "."
+        ],
+        "matches": [
+          {
+            "token": "happy",
+            "base": 1,
+            "negated": false,
+            "contribution": 1
+          }
+        ],
+        "ignored": [
+          "i",
+          "ain't",
+          "about",
+          "this"
+        ],
+        "score": 1,
+        "label": "positive"
+      },
+      "improved": {
+        "tokens": [
+          "i",
+          "ain't",
+          "happy",
+          "about",
+          "this",
+          "."
+        ],
+        "matches": [
+          {
+            "token": "happy",
+            "base": 1,
+            "negated": false,
+            "contribution": 1
+          }
+        ],
+        "ignored": [
+          "i",
+          "ain't",
+          "about",
+          "this"
+        ],
+        "score": 1,
+        "label": "positive"
+      }
+    },
+    {
+      "text": "I am happy about this.",
+      "expected": "positive",
+      "baseline": {
+        "tokens": [
+          "i",
+          "am",
+          "happy",
+          "about",
+          "this",
+          "."
+        ],
+        "matches": [
+          {
+            "token": "happy",
+            "base": 1,
+            "negated": false,
+            "contribution": 1
+          }
+        ],
+        "ignored": [
+          "i",
+          "am",
+          "about",
+          "this"
+        ],
+        "score": 1,
+        "label": "positive"
+      },
+      "improved": {
+        "tokens": [
+          "i",
+          "am",
+          "happy",
+          "about",
+          "this",
+          "."
+        ],
+        "matches": [
+          {
+            "token": "happy",
+            "base": 1,
+            "negated": false,
+            "contribution": 1
+          }
+        ],
+        "ignored": [
+          "i",
+          "am",
+          "about",
+          "this"
+        ],
+        "score": 1,
+        "label": "positive"
+      }
+    }
+  ]
+}

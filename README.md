@@ -1,67 +1,108 @@
-# The Mood Machine
+# The Mood Machine — AI110 Module 3 Tinker / Week-5 Lab
 
-The Mood Machine is a simple text classifier that begins with a rule based approach and can optionally be extended with a small machine learning model. It tries to guess whether a short piece of text sounds **positive**, **negative**, **neutral**, or even **mixed** based on patterns in your data.
+An educational sentiment classifier comparing explicit rules with a small
+bag-of-words machine-learning model. It labels short posts as positive, negative,
+neutral, or mixed, and shows evidence for the rule predictions.
 
-This lab gives you hands on experience with how basic systems work, where they break, and how different modeling choices affect fairness and accuracy. You will edit code, add data, run experiments, and write a short model card reflection.
+## Setup and run (Windows PowerShell)
 
----
+Use Python 3.11 or later; this project was verified with Python 3.14.2.
 
-## Repo Structure
-
-```plaintext
-├── dataset.py         # Starter word lists and example posts (you will expand these)
-├── mood_analyzer.py   # Rule based classifier with TODOs to improve
-├── main.py            # Runs the rule based model and interactive demo
-├── ml_experiments.py  # (New) A tiny ML classifier using scikit-learn
-├── model_card.md      # Template to fill out after experimenting
-└── requirements.txt   # Dependencies for optional ML exploration
+```powershell
+cd "C:\Users\mitch\OneDrive\Documents\ChatGPT\School\MoodMachine"
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe main.py
 ```
 
----
+On this computer the project environment is already installed, so run the last
+command. main.py prints development results and then accepts typed posts.
+Press Enter on a blank line or type quit to exit. It is a terminal program;
+there is no browser interface or email prompt.
 
-## Getting Started
+If python opens the Microsoft Store, use py or an installed Python executable
+for environment creation. On macOS/Linux use .venv/bin/python in place of the
+Windows executable path.
 
-1. Open this folder in VS Code.
-2. Make sure your Python environment is active.
-3. Install dependencies:
+### Batch evaluation, ML comparison, and tests
 
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4. Run the rule-based starter:
-
-    ```bash
-    python main.py
-    ```
-
-If pieces of the analyzer are not implemented yet, you will see helpful errors that guide you to the TODOs.
-
-To try the ML model later, run:
-
-```bash
-python ml_experiments.py
+```powershell
+.\.venv\Scripts\python.exe main.py --batch --stress
+.\.venv\Scripts\python.exe main.py --batch --stress --baseline
+.\.venv\Scripts\python.exe ml_experiments.py --batch
+.\.venv\Scripts\python.exe run_experiments.py
+.\.venv\Scripts\python.exe -m pytest -q
 ```
 
----
+Omit --batch from ml_experiments.py to try your own posts interactively.
+run_experiments.py writes results.json and evaluation_report.md relative to
+the script's folder. The rules need only Python; the ML comparison needs
+scikit-learn. requirements.txt pins the two direct dependencies used here.
 
-## What You Will Do
+## Five lab parts and evidence
 
-During this lab you will:
+| Part | Implementation and evidence |
+| --- | --- |
+| Build the dataset | dataset.py: original 6 plus 8 additions; the student accepted all 8 proposed labels; lengths and label values are validated |
+| Engineer the rules | mood_analyzer.py: tokenization, scores, mixed-signal detection, emojis, inspectable matches, and switchable negation |
+| Stress-test and improve | 8 separately reviewed stress posts; same vocabulary/rules with negation off/on isolates the focused change |
+| Evaluate and compare | main.py, ml_experiments.py, run_experiments.py; per-post predictions, data-growth and label-sensitivity experiments |
+| Model card | model_card.md documents data, actual results, regressions, limitations, language coverage, and AI assistance |
 
-- Implement the missing parts of the rule based `MoodAnalyzer`.
-- Add new positive and negative words.
-- Expand the dataset with more posts, including slang, emojis, sarcasm, or mixed emotions.
-- Observe unusual or incorrect predictions and think about why they happen.
-- Train a tiny machine learning model and compare its behavior to your rule based system.
-- Complete the model card with your findings about data, behavior, limitations, and improvements.
-- The goal is to help you reason about how models behave, how data shapes them, and why even small design choices matter.
+## Actual results
 
----
+| Variant | Development (14) | Diagnostic stress set (8) |
+| --- | --- | --- |
+| Keyword baseline | 9/14 (64.3%) | 2/8 (25.0%) |
+| Negation improvement | 11/14 (78.6%) | 2/8 (25.0%) |
+| ML trained on 6 starter posts | 10/14 (71.4%) | 2/8 (25.0%) |
+| ML trained on expanded 14 | 14/14 (100%) | 4/8 (50.0%) |
 
-## Tips
+The expanded ML development score is training accuracy. The rules were designed
+using the development examples too. Neither score demonstrates unseen reliability.
+The separate stress set never enters ML training, but is a small, deliberately
+selected diagnostic set. Six labels are positive: always predicting positive
+scores 75%, exceeding both models here. No neutral/mixed stress cases are present.
 
-- Start with preprocessing before updating scoring rules.
-- When debugging, print tokens, scores, or intermediate choices.
-- Ask an AI assistant to help create edge case posts or unusual wording.
-- Try examples that mislead or confuse your model. Failure cases teach you the most.
+Negation fixes not happy and not good on development posts. On stress posts it
+fixes not bad but introduces an error on not only good but amazing, leaving
+stress accuracy unchanged. This is a documented tradeoff, not a hidden failure.
+
+### Prediction evidence example
+
+```text
+This is not bad.
+Expected: positive; baseline: negative; improved: positive.
+Tokens: ['this', 'is', 'not', 'bad', '.']
+Matches: [{'token': 'bad', 'base': -1, 'negated': True, 'contribution': 1}]
+Ignored: ['this', 'is']
+Score: 1
+```
+
+The full report also explains sarcasm, slang, language variation, and the new
+negation regression. See [evaluation report](evaluation_report.md),
+[machine-readable evidence](results.json), [rule CLI run](rule_output.txt),
+and [ML CLI run](ml_output.txt).
+
+### Software verification
+
+```text
+.....................                                                    [100%]
+21 passed in 2.76s
+```
+
+Tests validate input alignment, signal behavior, explanation consistency,
+negation scope, empty input, invalid data, repeatability, and exclusion of
+stress-only vocabulary from training. Some sentiment predictions deliberately
+remain wrong and are documented; passing software tests does not mean 100%
+classification accuracy.
+
+## Documentation and submission
+
+- [Model card](model_card.md): purpose, rules, data, evaluation, limitations, bias concerns.
+- [AI assistance](ai_interactions.md): actual proposals, student label approvals, and verification.
+- [Learning walkthrough](docs/walkthrough.md): steps to run and inspect your own evidence.
+- [Canvas check-in draft](docs/check-in-draft.md): six answers to review after completing/submitting the lab.
+
+This is the Mood Machine lab, separate from PawPal+ and Music Recommender.
+The project uses synthetic classroom posts; it does not infer actual mental health.

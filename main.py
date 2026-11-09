@@ -1,94 +1,56 @@
-"""
-Entry point for the Mood Machine rule based mood analyzer.
-"""
+"""Rule evaluation and interactive demo: python main.py [--batch] [--stress]."""
+import argparse
 
-from typing import List
-
+from dataset import SAMPLE_POSTS, TRUE_LABELS, STRESS_POSTS, STRESS_LABELS, validate_dataset
 from mood_analyzer import MoodAnalyzer
-from dataset import SAMPLE_POSTS, TRUE_LABELS
 
 
-def evaluate_rule_based(posts: List[str], labels: List[str]) -> float:
-    """
-    Evaluate the rule based MoodAnalyzer on a labeled dataset.
-
-    Prints each text with its predicted label and the true label,
-    then returns the overall accuracy as a float between 0 and 1.
-    """
-    analyzer = MoodAnalyzer()
+def evaluate_rule_based(posts, labels, analyzer=None, title="Rule evaluation"):
+    """Print each label with inspectable evidence, after checking label alignment."""
+    validate_dataset(posts, labels)
+    analyzer = MoodAnalyzer() if analyzer is None else analyzer
     correct = 0
-    total = len(posts)
-
-    print("=== Rule Based Evaluation on SAMPLE_POSTS ===")
-    for text, true_label in zip(posts, labels):
-        predicted_label = analyzer.predict_label(text)
-        is_correct = predicted_label == true_label
-        if is_correct:
-            correct += 1
-
-        # If you implement explain(), you can uncomment these lines:
-        # reason = analyzer.explain(text)
-        # print(f'"{text}" -> predicted={predicted_label}, true={true_label} ({reason})')
-
-        print(f'"{text}" -> predicted={predicted_label}, true={true_label}')
-
-    if total == 0:
-        print("\nNo labeled examples to evaluate.")
-        return 0.0
-
-    accuracy = correct / total
-    print(f"\nRule based accuracy on SAMPLE_POSTS: {accuracy:.2f}")
+    print(f"=== {title} ===")
+    for text, expected in zip(posts, labels):
+        result = analyzer.analyze(text)
+        correct += result["label"] == expected
+        status = "OK" if result["label"] == expected else "MISMATCH"
+        print(f"{status}: {text!r} -> predicted={result['label']}, true={expected}")
+        print("  " + analyzer.explain(text))
+    accuracy = correct / len(posts) if posts else 0.0
+    print(f"Accuracy: {correct}/{len(posts)} = {accuracy:.2%}")
     return accuracy
 
 
-def run_batch_demo() -> None:
-    """
-    Run the MoodAnalyzer on the sample posts and print predictions only.
-
-    This is a quick way to see how your rules behave without comparing
-    to the true labels.
-    """
+def run_interactive_loop():
+    """Inspect user text until a blank line, quit, or closed input."""
     analyzer = MoodAnalyzer()
-    print("\n=== Batch Demo on SAMPLE_POSTS (rule based) ===")
-    for text in SAMPLE_POSTS:
-        label = analyzer.predict_label(text)
-        # If explain() is implemented, show a short explanation.
-        # reason = analyzer.explain(text)
-        # print(f'"{text}" -> {label} ({reason})')
-        print(f'"{text}" -> {label}')
-
-
-def run_interactive_loop() -> None:
-    """
-    Let the user type their own sentences and see the predicted mood.
-
-    Type 'quit' or press Enter on an empty line to exit.
-    """
-    analyzer = MoodAnalyzer()
-    print("\n=== Interactive Mood Machine (rule based) ===")
-    print("Type a sentence to analyze its mood.")
-    print("Type 'quit' or press Enter on an empty line to exit.\n")
-
+    print("\nType a post; Enter or 'quit' exits. This predicts text sentiment, not mental health.")
     while True:
-        user_input = input("You: ").strip()
-        if user_input == "" or user_input.lower() == "quit":
-            print("Goodbye from the Mood Machine.")
+        try:
+            text = input("You: ").strip()
+        except EOFError:
             break
+        if not text or text.casefold() == "quit":
+            break
+        print(analyzer.explain(text))
 
-        label = analyzer.predict_label(user_input)
-        # If explain() is implemented, you can include an explanation:
-        # reason = analyzer.explain(user_input)
-        # print(f"Model: {label} ({reason})")
-        print(f"Model: {label}")
+
+def main():
+    """Evaluate development data and optionally the separate stress set."""
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--batch", action="store_true", help="Evaluate and exit without asking for input.")
+    parser.add_argument("--stress", action="store_true", help="Also evaluate separate challenge examples.")
+    parser.add_argument("--baseline", action="store_true", help="Disable only negation handling.")
+    args = parser.parse_args()
+    analyzer = MoodAnalyzer(handle_negation=not args.baseline)
+    evaluate_rule_based(SAMPLE_POSTS, TRUE_LABELS, analyzer,
+                        "14 development posts (negation " + ("off" if args.baseline else "on") + ")")
+    if args.stress:
+        evaluate_rule_based(STRESS_POSTS, STRESS_LABELS, analyzer, "8 separate diagnostic stress posts")
+    if not args.batch:
+        run_interactive_loop()
 
 
 if __name__ == "__main__":
-    evaluate_rule_based(SAMPLE_POSTS, TRUE_LABELS)
-
-    run_batch_demo()
-
-    run_interactive_loop()
-
-    print("\nTip: After you explore the rule based model here,")
-    print("run `python ml_experiments.py` to try a simple ML based model")
-    print("trained on the same SAMPLE_POSTS and TRUE_LABELS.")
+    main()
