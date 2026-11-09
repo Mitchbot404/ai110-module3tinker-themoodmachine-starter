@@ -36,7 +36,9 @@ Windows executable path.
 
 Omit --batch from ml_experiments.py to try your own posts interactively.
 run_experiments.py writes results.json and evaluation_report.md relative to
-the script's folder. The rules need only Python; the ML comparison needs
+the script's folder. The JSON is generated locally and excluded from Git;
+the readable evaluation report is included in the repository.
+The rules need only Python; the ML comparison needs
 scikit-learn. requirements.txt pins the two direct dependencies used here.
 
 ## Five lab parts and evidence
@@ -80,9 +82,8 @@ Score: 1
 ```
 
 The full report also explains sarcasm, slang, language variation, and the new
-negation regression. See [evaluation report](evaluation_report.md),
-[machine-readable evidence](results.json), [rule CLI run](rule_output.txt),
-and [ML CLI run](ml_output.txt).
+negation regression. The [evaluation report](evaluation_report.md) includes
+per-example predictions, tokens, and matched contributions.
 
 ### Software verification
 
@@ -100,9 +101,10 @@ classification accuracy.
 ## Documentation and submission
 
 - [Model card](model_card.md): purpose, rules, data, evaluation, limitations, bias concerns.
-- [AI assistance](ai_interactions.md): actual proposals, student label approvals, and verification.
-- [Learning walkthrough](docs/walkthrough.md): steps to run and inspect your own evidence.
-- [Canvas check-in draft](docs/check-in-draft.md): six answers to review after completing/submitting the lab.
+- [Evaluation report](evaluation_report.md): measured results and prediction evidence.
+
+AI assistance and student decisions are documented in the model card.
+Submit this repository URL to CodePath, then complete the Week-5 check-in in Canvas.
 
 This is the Mood Machine lab, separate from PawPal+ and Music Recommender.
 The project uses synthetic classroom posts; it does not infer actual mental health.

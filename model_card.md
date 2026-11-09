@@ -90,7 +90,8 @@ predictions must change.
 ## 5. Evaluation
 
 Reproduce with python run_experiments.py. Full per-post predictions and rule
-diagnostics are in evaluation_report.md and results.json. Recorded environment:
+diagnostics are in evaluation_report.md. The script also generates results.json
+locally; this machine-readable duplicate is excluded from Git. Recorded environment:
 Python 3.14.2, scikit-learn 1.9.1; evaluation date November 8, 2026.
 
 | Model | Development posts | Separate stress posts |
@@ -186,7 +187,7 @@ remove the need for human review of labels and conclusions.
 The assistant implemented and ran the experiments and drafted this model card.
 The student reviewed proposed labels and supplied the personal fork. No separate
 group discussion, independent student execution, multi-model comparison, or
-personal discovery is invented. See ai_interactions.md for the actual workflow.
+personal discovery is invented. AI assistance is documented in this section.
 
 In real use, sentiment labels could misrepresent distress or a speaker's intent.
 Analyzing private messages also raises consent and privacy concerns. This
